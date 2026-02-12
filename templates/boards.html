@@ -1,0 +1,48 @@
+{% if loginned %}
+    {% extends "./blocks/base-log.html" %}
+{% else %}
+    {% extends "./blocks/base.html" %}
+{% endif %}
+
+{% block title %}
+Nexus - доски
+{% endblock %}
+
+{% block body %}
+<div class="d-flex flex-column custom-body-height">
+    <h1 class="d-flex justify-content-center">Доски</h1>
+    <div class=" d-flex justify-content-center homedesk-text flex-column">
+        <h4 class="d-flex justify-content-center">Это три раздела нашего форума.</h4>
+        <h4 class="d-flex justify-content-center">Каждый посвяшен своей теме и</h4>
+        <h4 class="d-flex justify-content-center">модерируется отдельными людьми!</h4>
+    </div>
+    <br>
+    <br>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-auto boards-div">
+            <h2 class="d-flex justify-content-center">/RANDOM/</h2>
+            <br>
+            <h4 class="d-flex justify-content-center">Случайная доска нашего форума для тех, <br> кому не нравятся правила <br> и постоянные запреты. <br> Эта доска почти не модерируется.</h4>
+            <br>
+            <br>
+            <h2 class="d-flex justify-content-center"><a href="/boards/random">Перейти</a></h2>
+        </div>
+        <div class="col-md-auto boards-div">
+            <h2 class="d-flex justify-content-center">/CLEAN/</h2>
+            <br>
+            <h4 class="d-flex justify-content-center">Здесь столько правил что даже админы не перечислят, <br> но вот парочку: не ругаться и не отправлять снафф или еще чего похуже.</h4>
+            <br>
+            <br>
+            <h2 class="d-flex justify-content-center"><a href="/boards/clean">Перейти</a></h2>
+        </div>
+        <div class="col-md-auto boards-div">
+            <h2 class="d-flex justify-content-center">/CREATIVE/</h2>
+            <br>
+            <h4 class="d-flex justify-content-center">Тут можно показать людям свое творчество или творить вместе. <br> Тут не такие жесткие правила как на чистой доске, но они все еще есть.</h4>
+            <br>
+            <br>
+            <h2 class="d-flex justify-content-center"><a href="/boards/creative">Перейти</a></h2>
+        </div>
+    </div>
+</div>
+{% endblock %}

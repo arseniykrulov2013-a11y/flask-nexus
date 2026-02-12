@@ -1,0 +1,51 @@
+{% extends "./blocks/base-log.html" %}
+
+{% block title %}
+Nexus - случайная доска
+{% endblock %}
+
+{% block body %}
+<h1 class="d-flex justify-content-center">/RANDOM/</h1>
+<br>
+<div class="d-flex justify-content-center flex-column">
+        <div class="post-div container-fluid">
+        <h1 class="label-margin">Создание поста</h1>
+        <h3 class="label-margin" style="opacity: 50%;">Поделитесь своим настроением...</h3>
+        <br>
+        <form class="col-md-auto" method="post">
+        <br>
+        <h3 class="label-margin">Название:</h3>
+        <input type="text" name="RandomPostName" id="RandomPostName" class="input" required>
+        <br>
+        <br>
+        <h3 class="label-margin">Текст:</h3>
+        <textarea type="text" name="RandomPostText" id="RandomPostText" class="input des-input" required></textarea>
+        <br>
+        <br>
+        <br>
+        <input type="submit" name="subminRandomPost" id="subminRandomPost" class="input" value="ОТПРАВИТЬ" style="font-weight: bolder;">
+        <br>
+        <br>
+        <br>
+        </form>
+    </div>
+    <br>
+    {% if p %}
+        {% for p in posts  %}
+        <div class="post-div container-fluid">
+            <h1 class="label-margin">{{p.name}}</h1>
+            <h6 class="double-label-margin" style="opacity: 50%;">От {{p.user_name}}</h6>
+            <h5 class="double-label-margin">{{p.text}}</h5>
+            <br>
+            <a href="/boards/post/{{p.id}}" class="input" style="font-weight: bolder;">Детальнее</a>
+            <br>
+            <br>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3 class="d-flex justify-content-center" style="opacity: 50%;">Пока постов нет...</h3>
+        <br>
+        <br>
+    {% endif %}
+</div>
+{% endblock %}

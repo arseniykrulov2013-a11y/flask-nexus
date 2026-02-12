@@ -1,0 +1,25 @@
+{
+  "stories": [],
+  "versions": [],
+  "backups": [
+    {
+      "timestamp": 1769439890428,
+      "localPath": "...\\Documents\\Babel\\babel-2026-01-26.backup.zip",
+      "cloudProviders": [],
+      "id": "f3388ac5-135e-4e9e-a6cb-1e21c40d9728"
+    },
+    {
+      "timestamp": 1770217943984,
+      "localPath": "...\\Documents\\Babel\\babel-2026-02-04.backup.zip",
+      "cloudProviders": [],
+      "id": "97402299-ce1e-4af8-884f-63a73bcf18a0"
+    },
+    {
+      "timestamp": 1770909456184,
+      "localPath": "...\\Documents\\Babel\\babel-2026-02-12.backup.zip",
+      "cloudProviders": [],
+      "id": "c4c75c10-0e4c-47d0-9fbe-1fdcefe9b0e7"
+    }
+  ],
+  "activity": []
+}
