@@ -6,7 +6,7 @@ authors = [
     {name = "Your Name",email = "you@example.com"}
 ]
 license = {text = "no"}
-requires-python = "3.14.1"
+requires-python == "3.14.1"
 dependencies = [
     "flask (>=3.1.2,<4.0.0)",
     "flask-sqlalchemy (>=3.1.1,<4.0.0)",
