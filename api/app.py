@@ -2,9 +2,10 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask import request, flash, redirect, session, abort
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user, UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
+from flask_sqlalchemy import SQLAlchemy
 
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
