@@ -3,5 +3,20 @@ name = "vercel-flask-nexus"
 version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
-  "flask>=3.1",
+  "blinker==1.9.0",
+  "click==8.3.1",
+  "colorama==0.4.6",
+  "flask==3.1.2",
+  "flask-Admin==2.0.2",
+  "flask-Login==0.6.3",
+  "flask-SQLAlchemy==3.1.1",
+  "greenlet==3.3.1"
+  "gunicorn==19.0.0"
+  "itsdangerous==2.2.0",
+  "jinja2==3.1.6",
+  "markupSafe==3.0.3",
+  "SQLAlchemy==2.0.46",
+  "typing_extensions==4.15.0",
+  "werkzeug==3.1.5",
+  "WTForms==3.2.1"
 ]
