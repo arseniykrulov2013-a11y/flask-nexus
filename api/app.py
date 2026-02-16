@@ -6,8 +6,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
 from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin
 
 app = Flask(__name__)
@@ -45,9 +43,6 @@ def CREATE_ALL():
     with app.app_context():
         db.create_all()
 
-
-
-admin = Admin(app, name="Админ-панель")
 app.secret_key = "salty_web3418"
 
 @lm.user_loader
@@ -217,15 +212,3 @@ def post_detail(postid):
 @app.errorhandler(401)
 def login_regirect(p):
     return redirect("/login")
-
-@app.before_request
-def before_request():
-    if request.full_path.startswith('/admin/'):
-        if current_user.is_admin == "FALSE":
-            abort(400, 'Отказанно в доступе...')
-
-
-admin.add_view(ModelView(Users, db.session, name="Пользователи"))
-admin.add_view(ModelView(Posts, db.session, name="Посты"))
-admin.add_view(ModelView(Comments, db.session, name="Комментарии"))
-
