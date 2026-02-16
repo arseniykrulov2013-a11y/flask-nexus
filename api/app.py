@@ -1,11 +1,51 @@
-from main import app, lm, render_template, url_for, db
-from modules import Users, Posts, Comments
+
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask import request, flash, redirect, session, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
+
+from flask import Flask, render_template, url_for
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin
+
+app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///nexus.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+lm = LoginManager(app)
+
+class Users (db.Model, UserMixin):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), default="Нет описания...")
+    is_admin = db.Column(db.String(18), default="FALSE")
+
+class Posts (db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.Integer, db.ForeignKey('users.id'))
+    text = db.Column(db.Text, nullable=False)
+    name = db.Column(db.String(64), nullable=False)
+    board = db.Column(db.String(64), nullable=False)
+
+class Comments (db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    text = db.Column(db.Text, nullable=False)
+
+def CREATE_ALL():
+    with app.app_context():
+        db.create_all()
+
+
 
 admin = Admin(app, name="Админ-панель")
 app.secret_key = "salty_web3418"
