@@ -22,3 +22,9 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
+
+[tool.Poetry]
+name = "nexus"
+
+[tool.Poetry.Packages]
+include = "src/nexus"
