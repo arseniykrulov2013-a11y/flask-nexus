@@ -228,5 +228,3 @@ def before_request():
 admin.add_view(ModelView(Users, db.session, name="Пользователи"))
 admin.add_view(ModelView(Posts, db.session, name="Посты"))
 admin.add_view(ModelView(Comments, db.session, name="Комментарии"))
-
-app.run()
