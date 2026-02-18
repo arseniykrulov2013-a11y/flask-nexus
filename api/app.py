@@ -5,7 +5,6 @@ from flask_login import login_user, logout_user, login_required, current_user, U
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
 from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin
@@ -14,35 +13,35 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///nexus.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
-db = SQLAlchemy(app)
+nexusdb = SQLAlchemy(app)
 lm = LoginManager(app)
 
-class Users (db.Model, UserMixin):
+class Users (nexusdb.Model, UserMixin):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(128), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255), default="Нет описания...")
-    is_admin = db.Column(db.String(18), default="FALSE")
+    id = nexusdb.Column(nexusdb.Integer, primary_key=True)
+    login = nexusdb.Column(nexusdb.String(128), nullable=False)
+    password = nexusdb.Column(nexusdb.String(255), nullable=False)
+    description = nexusdb.Column(nexusdb.String(255), default="Нет описания...")
+    is_admin = nexusdb.Column(nexusdb.String(18), default="FALSE")
 
-class Posts (db.Model):
+class Posts (nexusdb.Model):
     __tablename__ = 'posts'
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.Integer, db.ForeignKey('users.id'))
-    text = db.Column(db.Text, nullable=False)
-    name = db.Column(db.String(64), nullable=False)
-    board = db.Column(db.String(64), nullable=False)
+    id = nexusdb.Column(nexusdb.Integer, primary_key=True)
+    user_name = nexusdb.Column(nexusdb.Integer, nexusdb.ForeignKey('users.id'))
+    text = nexusdb.Column(nexusdb.Text, nullable=False)
+    name = nexusdb.Column(nexusdb.String(64), nullable=False)
+    board = nexusdb.Column(nexusdb.String(64), nullable=False)
 
-class Comments (db.Model):
+class Comments (nexusdb.Model):
     __tablename__ = 'comments'
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.Integer, db.ForeignKey('users.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
-    text = db.Column(db.Text, nullable=False)
+    id = nexusdb.Column(nexusdb.Integer, primary_key=True)
+    user_name = nexusdb.Column(nexusdb.Integer, nexusdb.ForeignKey('users.id'))
+    post_id = nexusdb.Column(nexusdb.Integer, nexusdb.ForeignKey('posts.id'))
+    text = nexusdb.Column(nexusdb.Text, nullable=False)
 
 def CREATE_ALL():
     with app.app_context():
-        db.create_all()
+        nexusdb.create_all()
 
 
 
@@ -81,8 +80,8 @@ def boards_random():
         
         post = Posts(name = postname, text = posttext, board = "random", user_name = current_user.login)
 
-        db.session.add(post)
-        db.session.commit()
+        nexusdb.session.add(post)
+        nexusdb.session.commit()
         return redirect("/boards/random")
     
     else:
@@ -101,8 +100,8 @@ def boards_clean():
         
         post = Posts(name = postname, text = posttext, board = "clean", user_name = current_user.login)
 
-        db.session.add(post)
-        db.session.commit()
+        nexusdb.session.add(post)
+        nexusdb.session.commit()
         return redirect("/boards/clean")
     
     else:
@@ -121,8 +120,8 @@ def boards_creative():
         
         post = Posts(name = postname, text = posttext, board = "creative", user_name = current_user.login)
 
-        db.session.add(post)
-        db.session.commit()
+        nexusdb.session.add(post)
+        nexusdb.session.commit()
         return redirect("/boards/creative")
     
     else:
@@ -141,7 +140,7 @@ def user():
         user.login = newlogin
         user.description = newdes
 
-        db.session.commit()
+        nexusdb.session.commit()
 
         newuser = current_user
         return render_template("user.html", u=newuser)
@@ -182,8 +181,8 @@ def register():
         else:
             hash_pwd = generate_password_hash(password)
             new_user = Users(login = login, password = hash_pwd)
-            db.session.add(new_user)
-            db.session.commit()
+            nexusdb.session.add(new_user)
+            nexusdb.session.commit()
 
             return redirect(url_for('login')) # В url_for имя функции
 
@@ -205,8 +204,8 @@ def post_detail(postid):
         if text and user:
             comment = Comments(user_name = user, text=text, post_id = postid)
 
-            db.session.add(comment)
-            db.session.commit()
+            nexusdb.session.add(comment)
+            nexusdb.session.commit()
             return redirect(f"/boards/post/{postid}")
 
     post = Posts.query.filter_by(id = postid).one()
@@ -224,6 +223,6 @@ def before_request():
             abort(400, 'Отказанно в доступе...')
 
 
-admin.add_view(ModelView(Users, db.session, name="Пользователи"))
-admin.add_view(ModelView(Posts, db.session, name="Посты"))
-admin.add_view(ModelView(Comments, db.session, name="Комментарии"))
+admin.add_view(ModelView(Users, nexusdb.session, name="Пользователи"))
+admin.add_view(ModelView(Posts, nexusdb.session, name="Посты"))
+admin.add_view(ModelView(Comments, nexusdb.session, name="Комментарии"))
