@@ -1,0 +1,11 @@
+[project]
+name = "vercel-flask-nexus"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "flask>=3.1,<4.0",
+  "gunicorn~=23.0.0",
+  "flask-login (>=0.6.3,<0.7.0)",
+  "werkzeug (>=3.1.5,<4.0.0)",
+  "flask-admin (>=2.0.2,<3.0.0)"
+]
