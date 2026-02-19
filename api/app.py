@@ -13,7 +13,8 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///nexus.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
-nexusdb = SQLAlchemy(app)
+with app.app_context():
+    nexusdb = SQLAlchemy(app)
 lm = LoginManager(app)
 
 class Users (nexusdb.Model, UserMixin):
