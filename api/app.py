@@ -11,7 +11,7 @@ from flask_login import LoginManager, UserMixin
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///nexus.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 with app.app_context():
     nexusdb = SQLAlchemy(app)
 lm = LoginManager(app)
