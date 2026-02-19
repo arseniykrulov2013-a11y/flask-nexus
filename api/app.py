@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin
+import os
 
 app = Flask(__name__)
 
@@ -14,6 +15,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///nexus.db'
 
 nexusdb = SQLAlchemy(app)
 lm = LoginManager(app)
+
+mem0_dir = os.environ.get("MEM0_DIR", "/tmp/.mem0")
 
 class Users (nexusdb.Model, UserMixin):
     __tablename__ = 'users'
