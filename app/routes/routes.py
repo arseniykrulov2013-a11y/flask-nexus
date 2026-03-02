@@ -1,54 +1,15 @@
-
-from flask import Flask, render_template, url_for
-from flask import request, flash, redirect, session, abort
-from flask_login import login_user, logout_user, login_required, current_user, UserMixin
+from app import app, nexusdb, LoginManager, Admin
+from app.models.users import Users
+from app.models.posts import Posts
+from app.models.comments import Comments
+from flask import render_template, url_for, redirect, abort, request
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_sqlalchemy import SQLAlchemy
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from flask_login import LoginManager, UserMixin
-import os
-
-app = Flask(__name__)
-
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///nexus.db'
-
-nexusdb = SQLAlchemy(app)
-lm = LoginManager(app)
-
-mem0_dir = os.environ.get("MEM0_DIR", "/tmp/.mem0")
-
-class Users (nexusdb.Model, UserMixin):
-    __tablename__ = 'users'
-    id = nexusdb.Column(nexusdb.Integer, primary_key=True)
-    login = nexusdb.Column(nexusdb.String(128), nullable=False)
-    password = nexusdb.Column(nexusdb.String(255), nullable=False)
-    description = nexusdb.Column(nexusdb.String(255), default="Нет описания...")
-    is_admin = nexusdb.Column(nexusdb.String(18), default="FALSE")
-
-class Posts (nexusdb.Model):
-    __tablename__ = 'posts'
-    id = nexusdb.Column(nexusdb.Integer, primary_key=True)
-    user_name = nexusdb.Column(nexusdb.Integer, nexusdb.ForeignKey('users.id'))
-    text = nexusdb.Column(nexusdb.Text, nullable=False)
-    name = nexusdb.Column(nexusdb.String(64), nullable=False)
-    board = nexusdb.Column(nexusdb.String(64), nullable=False)
-
-class Comments (nexusdb.Model):
-    __tablename__ = 'comments'
-    id = nexusdb.Column(nexusdb.Integer, primary_key=True)
-    user_name = nexusdb.Column(nexusdb.Integer, nexusdb.ForeignKey('users.id'))
-    post_id = nexusdb.Column(nexusdb.Integer, nexusdb.ForeignKey('posts.id'))
-    text = nexusdb.Column(nexusdb.Text, nullable=False)
-
-def CREATE_ALL():
-    with app.app_context():
-        nexusdb.create_all()
-
-
 
 admin = Admin(app, name="Админ-панель")
 app.secret_key = "salty_web3418"
+
+lm = LoginManager(app)
 
 @lm.user_loader
 def load_user(user_id):
@@ -223,8 +184,3 @@ def before_request():
     if request.full_path.startswith('/admin/'):
         if current_user.is_admin == "FALSE":
             abort(400, 'Отказанно в доступе...')
-
-
-admin.add_view(ModelView(Users, nexusdb.session, name="Пользователи"))
-admin.add_view(ModelView(Posts, nexusdb.session, name="Посты"))
-admin.add_view(ModelView(Comments, nexusdb.session, name="Комментарии"))
