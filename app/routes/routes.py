@@ -184,3 +184,5 @@ def before_request():
     if request.full_path.startswith('/admin/'):
         if current_user.is_admin == "FALSE":
             abort(400, 'Отказанно в доступе...')
+
+
