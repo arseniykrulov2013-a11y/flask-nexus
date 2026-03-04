@@ -1,4 +1,4 @@
-from app import nexusdb
+from app.app import nexusdb
 from flask_login import UserMixin
 
 class Users (nexusdb.Model, UserMixin):

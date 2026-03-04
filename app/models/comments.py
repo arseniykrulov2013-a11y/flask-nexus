@@ -1,4 +1,4 @@
-from app import nexusdb
+from app.app import nexusdb
 
 class Comments (nexusdb.Model):
     __tablename__ = 'comments'

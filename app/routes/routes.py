@@ -1,4 +1,4 @@
-from app import app, nexusdb, LoginManager, Admin
+from app.app import app, nexusdb, LoginManager, Admin
 from app.models.users import Users
 from app.models.posts import Posts
 from app.models.comments import Comments

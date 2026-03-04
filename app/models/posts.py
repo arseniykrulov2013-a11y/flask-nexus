@@ -1,4 +1,4 @@
-from app import nexusdb
+from app.app import nexusdb
 
 class Posts (nexusdb.Model):
     __tablename__ = 'posts'
