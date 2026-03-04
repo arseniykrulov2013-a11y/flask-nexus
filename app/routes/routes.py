@@ -5,9 +5,10 @@ from app.models.comments import Comments
 from flask import render_template, url_for, redirect, abort, request
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
+import uuid
 
 admin = Admin(app, name="Админ-панель")
-app.secret_key = "salty_web3418"
+app.secret_key = secret_key = uuid.uuid4()
 
 lm = LoginManager(app)
 
